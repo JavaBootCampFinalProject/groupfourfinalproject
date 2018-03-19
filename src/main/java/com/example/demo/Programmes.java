@@ -14,7 +14,6 @@ public class Programmes {
 
     private String courseName;
     private String courseDescription;
-    private String courseCriteria;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppUser> userApplied;
@@ -25,18 +24,24 @@ public class Programmes {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppUser> userInCourse;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Criteria> courseCriteria;
+
     public void addUserApplied(AppUser user) {this.userApplied.add(user);}
     public void addUserApproved(AppUser user) {this.userApproved.add(user);}
     public void addUserInCourse(AppUser user) {this.userInCourse.add(user);}
+    public void addCourseCriteria(Criteria criteria) {this.courseCriteria.add(criteria);}
 
     public void removeUserApplied(AppUser user) {this.userApplied.remove(user);}
     public void removeUserApproved(AppUser user) {this.userApproved.remove(user);}
     public void removeUserInCourse(AppUser user) {this.userInCourse.remove(user);}
+    public void removeCourseCriteria(Criteria criteria) {this.courseCriteria.remove(criteria);}
 
     public Programmes() {
         this.userApplied = new HashSet<>();
         this.userApproved = new HashSet<>();
         this.userInCourse = new HashSet<>();
+        this.courseCriteria = new HashSet<>();
     }
 
     public long getId() {
@@ -63,13 +68,6 @@ public class Programmes {
         this.courseDescription = courseDescription;
     }
 
-    public String getCourseCriteria() {
-        return courseCriteria;
-    }
-
-    public void setCourseCriteria(String courseCriteria) {
-        this.courseCriteria = courseCriteria;
-    }
 
     public Set<AppUser> getUserApplied() {
         return userApplied;
@@ -93,5 +91,13 @@ public class Programmes {
 
     public void setUserInCourse(Set<AppUser> userInCourse) {
         this.userInCourse = userInCourse;
+    }
+
+    public Set<Criteria> getCourseCriteria() {
+        return courseCriteria;
+    }
+
+    public void setCourseCriteria(Set<Criteria> courseCriteria) {
+        this.courseCriteria = courseCriteria;
     }
 }
