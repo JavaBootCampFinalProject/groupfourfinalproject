@@ -159,7 +159,14 @@ public class DataLoader implements CommandLineRunner {
 
         UserCriteria userCriteria = new UserCriteria();
         userCriteria.setCriteriaState(true);
-        userCriteria.addcCriteria(criteriaReposiotry.findOne(new Long(1)));
+        userCriteriaRepository.save(userCriteria);
+        criteria = (criteriaReposiotry.findOne(new Long(1)));
+        criteria.addUserCriteria(userCriteriaRepository.findOne(new Long(1)));
+        user = appUserRepository.findOne(new Long(3));
+        user.addUserCriteria(userCriteriaRepository.findOne(new Long(1)));
+        appUserRepository.save(user);
+        criteriaReposiotry.save(criteria);
+
         userCriteria.addUser(appUserRepository.findOne(new Long(3)));
         userCriteriaRepository.save(userCriteria);
 
