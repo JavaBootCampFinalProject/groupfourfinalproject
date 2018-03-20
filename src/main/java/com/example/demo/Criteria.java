@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import org.apache.catalina.User;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +19,13 @@ public class Criteria {
 
     @ManyToMany(mappedBy = "courseCriteria")
     private Set<Programmes> programmesCriteria;
+
+    public void removeUserCriteria(UserCriteria criteria) {
+        this.criteriaCriteria.remove(criteria);
+    }
+    public void addUserCriteria(UserCriteria criteria) {
+        this.criteriaCriteria.add(criteria);
+    }
 
     public Criteria() {
         this.criteriaCriteria = new HashSet<>();

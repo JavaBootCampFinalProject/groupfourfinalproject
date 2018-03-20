@@ -36,7 +36,7 @@ public class AppUser {
     private Set<Programmes> inCourse;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Criteria> userCriteria;
+    private Set<UserCriteria> userCriteria;
 
     public void removeRole(AppRole role) {
         this.roles.remove(role);
@@ -45,12 +45,13 @@ public class AppUser {
         this.roles.add(role);
     }
 
-    public void removeUserCriteria(Criteria criteria) {
-        this.userCriteria.remove(criteria);
+    public void removeUserCriteria(UserCriteria userCriteria) {
+        this.userCriteria.remove(userCriteria);
     }
-    public void addUserCriteria(Criteria criteria) {
-        this.userCriteria.add(criteria);
+    public void addUserCriteria(UserCriteria userCriteria) {
+        this.userCriteria.add(userCriteria);
     }
+
 
 
     public AppUser() {
@@ -109,14 +110,6 @@ public class AppUser {
     }
 
 
-    public Set<Criteria> getUserCriteria() {
-        return userCriteria;
-    }
-
-    public void setUserCriteria(Set<Criteria> userCriteria) {
-        this.userCriteria = userCriteria;
-    }
-
     public Set<Programmes> getApplied() {
         return applied;
     }
@@ -139,5 +132,13 @@ public class AppUser {
 
     public void setInCourse(Set<Programmes> inCourse) {
         this.inCourse = inCourse;
+    }
+
+    public Set<UserCriteria> getUserCriteria() {
+        return userCriteria;
+    }
+
+    public void setUserCriteria(Set<UserCriteria> userCriteria) {
+        this.userCriteria = userCriteria;
     }
 }
