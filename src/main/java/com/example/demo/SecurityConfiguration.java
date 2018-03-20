@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 .antMatchers("/add","/edit/**").hasAuthority("ADMIN")
-                .antMatchers("/**","static/css/**","/css/**","/").permitAll()
+                .antMatchers("/appuserform","/**","static/css/**","/css/**","/").permitAll()
                 .anyRequest().authenticated();
 
         http

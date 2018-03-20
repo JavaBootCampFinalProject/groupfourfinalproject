@@ -4,22 +4,30 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Home Page</title>
+    <link rel="stylesheet" href="../static/css/regstylesheet.css">
+    <link rel="stylesheet" href="css/regstylesheet.css">
+
 </head>
 <body>
 <th:block th:replace="base::navlinks"></th:block>
-<form th:action="@{/appuserform}" method="post" th:object="${appuser}">
+<div class="testbox">
+    <h1>Registration</h1>
 
-    <input type="text" th:field="*{username}" placeholder="Enter name"/>
+    <form  th:action="@{/appuserform}" th:object="${appuser}" method="post">
+        <hr>
 
-    <input type="email" th:field="*{userEmail}"  placeholder="Enter e-mail"/>
-
-    <input type="password" th:field="*{password}" placeholder="password"/>
-
-    <input type="submit" value="Register"/>
-
-</form>
-
-
+        <hr>
+        <label id="icon" for="name"></label>
+        <input type="text" name="name" id="name" placeholder="Email"  th:field = "*{userEmail}"required/>
+        <label id="icon" for="name"></label>
+        <input type="text" name="name" id="name" placeholder=" User Name" th:field = "*{fullName}" required/>
+        <label id="icon" for="name"></label>
+        <input type="text" name="name" id="name" placeholder=" User Name" th:field = "*{username}" required/>
+        <label id="icon" for="name"></label>
+        <input type="password" name="name" id="name" placeholder="Password"  th:field = "*{password}"required/>
+        <a class="button"><button type="submit">Sign Up</button></a>
+    </form>
+</div>
 
 <th:block th:replace="base::footer"></th:block>
 <th:block th:replace="base::js"></th:block>

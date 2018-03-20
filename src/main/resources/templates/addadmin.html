@@ -5,10 +5,31 @@
     <meta charset="UTF-8" />
     <title>Base</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/regstylesheet.css">
+    <link rel="stylesheet" href="../static/css/regstylesheet.css">
+
+
 <body>
 
 <th:block th:replace="base::navlinks"></th:block>
+<div class="testbox">
+    <h1>Registration</h1>
 
+    <form  th:action="@{/addadmin}" th:object="${appuser}" method="post">
+        <hr>
+
+        <hr>
+        <label id="icon" for="name"></label>
+        <input type="text" name="name" id="name" placeholder="Email"  th:field = "*{userEmail}"required/>
+        <label id="icon" for="name"></label>
+        <input type="text" name="name" id="name" placeholder=" User Name" th:field = "*{fullName}" required/>
+        <label id="icon" for="name"></label>
+        <input type="text" name="name" id="name" placeholder=" User Name" th:field = "*{username}" required/>
+        <label id="icon" for="name"></label>
+        <input type="password" name="name" id="name" placeholder="Password"  th:field = "*{password}"required/>
+        <a class="button"><button type="submit">Add Admin</button></a>
+    </form>
+</div>
 
 
 

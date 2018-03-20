@@ -25,13 +25,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr >
-            <td>Getahun</td>
-            <td >Hiring in Tech</td>
-            <td><a href="#"> Approve</a></td>
-
+        <tr th:each="appuser: ${appuser}">
+            <td th:text="${appuser.fullName}">Getahun</td>
+            <td th:text="${appuser.applied}" >Hiring in Tech</td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/approve/{id}(id=${appuser.id})}">Approve</a></td>
         </tr>
-
         </tbody>
     </table>
 </div>

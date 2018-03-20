@@ -25,10 +25,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr >
-            <td>Hiring in Tech</td>
-            <td >28</td>
-            <td>13</td>
+        <tr th:each="program: ${program}">
+            <td th:text="${program.courseName}">Hiring in Tech</td>
+            <td th:text="${program.applicantCounter}">28</td>
+            <td th:text="${program.studentCounter}">13</td>
 
         </tr>
 
