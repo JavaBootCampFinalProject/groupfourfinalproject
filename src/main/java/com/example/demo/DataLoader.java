@@ -31,12 +31,12 @@ public class DataLoader implements CommandLineRunner {
         // A few users
         // Admin 1
         AppUser user = new AppUser();
-        user.setUsername("John");
+        user.setUsername("Johhn");
         user.setPassword("password1");
         user.setFullName("John Doe");
         user.setUserEmail("g1@gmail.com");
         appUserRepository.save(user);
-        user.addRole(appRoleRepository.findAppRoleByRoleName("USER"));
+        user.addRole(appRoleRepository.findAppRoleByRoleName("ADMIN"));
         appUserRepository.save(user);
         // Admin 2
         user = new AppUser();
@@ -48,6 +48,17 @@ public class DataLoader implements CommandLineRunner {
         user.addRole(appRoleRepository.findAppRoleByRoleName("ADMIN"));
         appUserRepository.save(user);
         // User 1
+        user = new AppUser();
+        user.setUsername("rod");
+        user.setPassword("password");
+        user.setFullName("rod Smith");
+        user.setUserEmail("rod@gmail.com");
+        appUserRepository.save(user);
+        user.addRole(appRoleRepository.findAppRoleByRoleName("USER"));
+        appUserRepository.save(user);
+
+
+
         user = new AppUser();
         user.setUsername("Joe");
         user.setPassword("password3");

@@ -57,7 +57,12 @@ public class AppUser {
     private boolean criteriaRecentGraduate;
     private boolean criteriaCurrentEarnings;
 
-
+    public AppUser(String username, String password, String userEmail, String fullName) {
+        this.username = username;
+        this.password = password;
+        this.userEmail = userEmail;
+        this.fullName = fullName;
+    }
 
     public AppUser() {
         this.roles = new HashSet<>();

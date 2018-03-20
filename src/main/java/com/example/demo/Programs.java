@@ -25,6 +25,8 @@ public class Programs {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppUser> userInCourse;
 
+    //userInCourse.count  ();
+
     public void addUserApplied(AppUser user) {this.userApplied.add(user);}
     public void addUserApproved(AppUser user) {this.userApproved.add(user);}
     public void addUserInCourse(AppUser user) {this.userInCourse.add(user);}
