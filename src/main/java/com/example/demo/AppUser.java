@@ -57,6 +57,9 @@ public class AppUser {
     private boolean criteriaRecentGraduate;
     private boolean criteriaCurrentEarnings;
 
+    private boolean techCriteriaMet;
+    private boolean futureCriteriaMet;
+
     public AppUser(String username, String password, String userEmail, String fullName) {
         this.username = username;
         this.password = password;
@@ -250,5 +253,46 @@ public class AppUser {
 
     public void setCriteriaCurrentEarnings(boolean criteriaCurrentEarnings) {
         this.criteriaCurrentEarnings = criteriaCurrentEarnings;
+    }
+
+    public boolean isTechCriteriaMet() {
+        if (!this.isCriteriaEnglish()){return false;}
+        if (!this.isCriteriaUnemployed()){return false;}
+        if (!this.isCriteriaUnderEmployed()){return false;}
+        if (!this.isCriteriaComputerComfortable()){return false;}
+        if (!this.isCriteriaItInterest()){return false;}
+        if (!this.isCriteriaDiploma()){return false;}
+        if (!this.isCriteriaWorkInUs()){return false;}
+        return true;
+    }
+
+    public void setTechCriteriaMet(boolean techCriteriaMet) {
+        this.techCriteriaMet = techCriteriaMet;
+    }
+
+    public boolean isFutureCriteriaMet() {
+        if (!this.isCriteriaExperienceOOP()) {
+            return false;
+        }
+        if (!this.isCriteriaUnderstandOOP()) {
+            return false;
+        }
+        if (!this.isCriteriaCompSciMajor()) {
+            return false;
+        }
+        if (!this.isCriteriaRecentGraduate()) {
+            return false;
+        }
+        if (!this.isCriteriaCurrentEarnings()) {
+            return false;
+        }
+        if (!this.isCriteriaWorkInUs()) {
+            return false;
+        }
+        return true;
+    }
+
+    public void setFutureCriteriaMet(boolean futureCriteriaMet) {
+        this.futureCriteriaMet = futureCriteriaMet;
     }
 }

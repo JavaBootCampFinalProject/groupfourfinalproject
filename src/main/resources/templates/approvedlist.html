@@ -14,7 +14,7 @@
 
 
 
-    <h1>List of Applicants</h1>
+<h1>List of Students</h1>
 <div >
     <table id="keywords" cellspacing="0" cellpadding="0" style="width:100%">
         <thead  style="text-align: center">
@@ -26,18 +26,18 @@
         </thead>
         <tbody>
         <th:block th:object="${java}">
-        <tr th:each="user:${javaapplicant}">
-            <td th:text="${user.username}"></td>
-            <td th:text="${java.courseName}"></td>
-            <th> <a th:href="@{/approve/{applicantid} (applicantid = ${user.id})}">   Approve </a></th>
-        </tr>
+            <tr th:each="user:${javastudent}">
+                <td th:text="${user.username}"></td>
+                <td th:text="${java.courseName}"></td>
+                <td>    Approved </td>
+            </tr>
         </th:block>
 
         <th:block th:object="${tech}">
-            <tr th:each="user:${techapplicant}">
+            <tr th:each="user:${techstudent}">
                 <td th:text="${user.username}"></td>
                 <td th:text="${tech.courseName}"></td>
-                <th> <a th:href="@{/approve/{applicantid} (applicantid = ${user.id})}">   Approve </a></th>
+                <td> Approved </td>
 
             </tr>
         </th:block>
