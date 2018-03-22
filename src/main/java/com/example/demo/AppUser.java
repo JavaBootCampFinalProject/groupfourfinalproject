@@ -1,8 +1,6 @@
 package com.example.demo;
 
-
 import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +10,6 @@ public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
 
     @NotEmpty
     private String username;
@@ -27,19 +24,31 @@ public class AppUser {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> roles;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Programs> userPrograms;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Programs> recommendedCourses;
+
     @ManyToMany(mappedBy = "userApplied")
     private Set<Programs> applied;
 
     @ManyToMany(mappedBy = "userApproved")
     private Set<Programs> approved;
 
-    @ManyToMany(mappedBy = "userInCourse")
-    private Set<Programs> inCourse;
+    @ManyToMany(mappedBy = "userCourse")
+    private Set<Programs> program;
 
+    public void clearRecommend(){this.recommendedCourses.clear();}
+
+    public  void removeRecomend(Programs program){this.recommendedCourses.remove(program);}
+    public  void removeCourse(Programs program){this.program.remove(program);}
     public void removeRole(AppRole role) {
         this.roles.remove(role);
     }
 
+    public  void addRecommend(Programs program){this.recommendedCourses.add(program);}
+    public  void addCourse(Programs program){this.program.add(program);}
     public void addRole(AppRole role) {
         this.roles.add(role);
     }
@@ -60,18 +69,12 @@ public class AppUser {
     private boolean techCriteriaMet;
     private boolean futureCriteriaMet;
 
-    public AppUser(String username, String password, String userEmail, String fullName) {
-        this.username = username;
-        this.password = password;
-        this.userEmail = userEmail;
-        this.fullName = fullName;
-    }
 
     public AppUser() {
         this.roles = new HashSet<>();
         this.applied = new HashSet<>();
         this.approved = new HashSet<>();
-        this.inCourse = new HashSet<>();
+        this.program = new HashSet<>();
         this.criteriaCompSciMajor = false;
         this.criteriaComputerComfortable = false;
         this.criteriaCurrentEarnings = false;
@@ -149,14 +152,6 @@ public class AppUser {
 
     public void setApproved(Set<Programs> approved) {
         this.approved = approved;
-    }
-
-    public Set<Programs> getInCourse() {
-        return inCourse;
-    }
-
-    public void setInCourse(Set<Programs> inCourse) {
-        this.inCourse = inCourse;
     }
 
     public boolean isCriteriaEnglish() {
@@ -266,33 +261,45 @@ public class AppUser {
         return true;
     }
 
+    public boolean isFutureCriteriaMet() {
+        if (!this.isCriteriaExperienceOOP()) {return false;}
+        if (!this.isCriteriaUnderstandOOP()) {return false;}
+        if (!this.isCriteriaCompSciMajor()) {return false;}
+        if (!this.isCriteriaRecentGraduate()) {return false;}
+        if (!this.isCriteriaCurrentEarnings()) {return false;}
+        if (!this.isCriteriaWorkInUs()) {return false;}
+        return true;
+    }
+
+    public Set<Programs> getRecommendedCourses() {
+        return recommendedCourses;
+    }
+
+    public void setRecommendedCourses(Set<Programs> recommendedCourses) {
+        this.recommendedCourses = recommendedCourses;
+    }
+
+    public Set<Programs> getProgram() {
+        return program;
+    }
+
+    public void setProgram(Set<Programs> program) {
+        this.program = program;
+    }
+
     public void setTechCriteriaMet(boolean techCriteriaMet) {
         this.techCriteriaMet = techCriteriaMet;
     }
 
-    public boolean isFutureCriteriaMet() {
-        if (!this.isCriteriaExperienceOOP()) {
-            return false;
-        }
-        if (!this.isCriteriaUnderstandOOP()) {
-            return false;
-        }
-        if (!this.isCriteriaCompSciMajor()) {
-            return false;
-        }
-        if (!this.isCriteriaRecentGraduate()) {
-            return false;
-        }
-        if (!this.isCriteriaCurrentEarnings()) {
-            return false;
-        }
-        if (!this.isCriteriaWorkInUs()) {
-            return false;
-        }
-        return true;
-    }
-
     public void setFutureCriteriaMet(boolean futureCriteriaMet) {
         this.futureCriteriaMet = futureCriteriaMet;
+    }
+
+    public Set<Programs> getUserPrograms() {
+        return userPrograms;
+    }
+
+    public void setUserPrograms(Set<Programs> userPrograms) {
+        this.userPrograms = userPrograms;
     }
 }

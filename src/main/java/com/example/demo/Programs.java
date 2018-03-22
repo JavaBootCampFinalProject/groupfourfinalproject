@@ -23,22 +23,26 @@ public class Programs {
     private Set<AppUser> userApproved;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<AppUser> userInCourse;
+    private Set<AppUser> userCourse;
 
-    //userInCourse.count  ();
+    @ManyToMany(mappedBy = "userPrograms")
+    private Set<AppUser> programUsers;
+
+    @ManyToMany(mappedBy = "recommendedCourses")
+    private Set<AppUser> recommendCourses;
 
     public void addUserApplied(AppUser user) {this.userApplied.add(user);}
     public void addUserApproved(AppUser user) {this.userApproved.add(user);}
-    public void addUserInCourse(AppUser user) {this.userInCourse.add(user);}
+    public void addUserInCourse(AppUser user) {this.userCourse.add(user);}
 
     public void removeUserApplied(AppUser user) {this.userApplied.remove(user);}
     public void removeUserApproved(AppUser user) {this.userApproved.remove(user);}
-    public void removeUserInCourse(AppUser user) {this.userInCourse.remove(user);}
+    public void removeUserInCourse(AppUser user) {this.userCourse.remove(user);}
 
     public Programs() {
         this.userApplied = new HashSet<>();
         this.userApproved = new HashSet<>();
-        this.userInCourse = new HashSet<>();
+        this.userCourse = new HashSet<>();
     }
 
     public long getId() {
@@ -89,11 +93,28 @@ public class Programs {
         this.userApproved = userApproved;
     }
 
-    public Set<AppUser> getUserInCourse() {
-        return userInCourse;
+
+    public Set<AppUser> getRecommendCourses() {
+        return recommendCourses;
     }
 
-    public void setUserInCourse(Set<AppUser> userInCourse) {
-        this.userInCourse = userInCourse;
+    public void setRecommendCourses(Set<AppUser> recommendCourses) {
+        this.recommendCourses = recommendCourses;
+    }
+
+    public Set<AppUser> getProgramUsers() {
+        return programUsers;
+    }
+
+    public void setProgramUsers(Set<AppUser> programUsers) {
+        this.programUsers = programUsers;
+    }
+
+    public Set<AppUser> getUserCourse() {
+        return userCourse;
+    }
+
+    public void setUserCourse(Set<AppUser> userCourse) {
+        this.userCourse = userCourse;
     }
 }

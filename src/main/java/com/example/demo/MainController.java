@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -37,7 +36,6 @@ public class MainController {
     }
 
     @PostMapping("/appuserform")
-
     public String processAppUserForm(@Valid @ModelAttribute("appuser") AppUser appuser, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "appuserform";
@@ -48,13 +46,13 @@ public class MainController {
         return "login";
     }
 
-    @GetMapping("/criteria")
+    @GetMapping("/getcriteria")
     public String getCriteriaForm(Model model, Authentication authentication) {
         model.addAttribute("appUserCriteriaform", appUserRepository.findAppUserByUsername(authentication.getName()));
         return "criteriaform";
     }
 
-    @PostMapping("/criteria")
+    @PostMapping("/processcriteria")
     public String processCriteriaForm(@Valid @ModelAttribute("appUserCriteriaform") AppUser appuser, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "criteriaform";
@@ -65,8 +63,12 @@ public class MainController {
     }
 
     @RequestMapping("/recommendedlist")
-    public String recomendedList() {
-        //For current user, run a check method for each course to see what they qualify for
+    public String recomendedList(Model model, Authentication authentication) {
+        AppUser appUser = appUserRepository.findAppUserByUsername(authentication.getName());
+        appUser.clearRecommend();
+        if (appUser.isFutureCriteriaMet()){appUser.addRecommend(programsRepository.findOne(new Long(1)));}
+        if (appUser.isFutureCriteriaMet()){appUser.addRecommend(programsRepository.findOne(new Long(2)));}
+        model.addAttribute("user", appUser);
         return "recommendedlist";
     }
 
@@ -83,10 +85,18 @@ public class MainController {
         return "applicantlist";
     }
 
+    @RequestMapping("/studentlist/{courseId}")
+    public String studentList(@PathVariable("courseId") Programs program,Model model) {
+        model.addAttribute("students", program.getUserCourse());
+        return "coursestudents";
+    }
+
     @RequestMapping("/approve/{courseId}/{studentId}") //Need to pass in a course and a student
     public String approvalPage(@PathVariable("courseId") Programs program, @PathVariable("studentId") AppUser appUser, Model model, Authentication authentication) {
         program.addUserApproved(appUser);
         program.removeUserApplied(appUser);
+        appUser.addCourse(program);
+        appUserRepository.save(appUser);
         programsRepository.save(program);
         model.addAttribute("user", appUser);
         return "approvalconfirmation";
@@ -104,14 +114,42 @@ public class MainController {
         return "programslist";
     }
 
-    @RequestMapping("/userAccept/{courseId}")
+    @RequestMapping("/userAccept/{courseId}") //Email method needs to go in here
     public String acceptApprovalPage(@PathVariable("courseId") Programs program, Model model, Authentication authentication) {
-        program.addUserInCourse(appUserRepository.findAppUserByUsername(authentication.getName()));
-        program.removeUserApproved(appUserRepository.findAppUserByUsername(authentication.getName()));
+        AppUser appUser = appUserRepository.findAppUserByUsername(authentication.getName());
+        program.addUserInCourse(appUser);
+        program.removeUserApproved(appUser);
+        appUser.removeCourse(program);
+        appUserRepository.save(appUser);
         programsRepository.save(program);
-        model.addAttribute("user", appUserRepository.findAppUserByUsername(authentication.getName()));
+        model.addAttribute("user", appUser);
         return "welcome to course";
 
     }
 
+    @GetMapping("/adminform")
+    public String getAdminForm(Model model) {
+        AppUser appUser = new AppUser();
+        appUser.addRole(appRoleRepository.findAppRoleByRoleName("ADMIN"));
+        appUserRepository.save(appUser);
+        model.addAttribute("appuser", appUser);
+        return "appuserform";
+    }
+
+    @PostMapping("/processadminform")
+    public String processAdminForm(@Valid @ModelAttribute("adminUser") AppUser appuser, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "appuserform";
+        } else {
+            model.addAttribute("message", "User Account Successfully Created");
+            appUserRepository.save(appuser);
+        }
+        return "login";
+    }
+
+    @PostMapping("/currentuserpage")
+    public String currentUserPage(Model model, Authentication authentication){
+        model.addAttribute("user", appUserRepository.findAppUserByUsername(authentication.getName()));
+        return "userpage";
+    }
 }
