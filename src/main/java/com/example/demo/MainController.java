@@ -127,13 +127,13 @@ public class MainController {
 
     }
 
-    @GetMapping("/adminform")
+    @GetMapping("/getadminform")
     public String getAdminForm(Model model) {
         AppUser appUser = new AppUser();
         appUser.addRole(appRoleRepository.findAppRoleByRoleName("ADMIN"));
         appUserRepository.save(appUser);
         model.addAttribute("appuser", appUser);
-        return "appuserform";
+        return "adminform";
     }
 
     @PostMapping("/processadminform")
